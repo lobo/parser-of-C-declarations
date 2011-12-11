@@ -100,15 +100,15 @@ read_to_first_identifier()
 
 deal_with_arrays() 
 {
-	while (this.type == '[') 
-	{
-		printf("array ");
-		gettoken(); /* an number or ']' */
+    while (this.type == '[')
+    {
+        printf("array ");
+        gettoken(); /* an number or ']' */
 		
 		if (isdigit(this.string[0])) 
 		{
-			printf("0..%d ", atoi(this.string)-1);
-			gettoken(); /* read the ']' */
+		    printf("0..%d ", atoi(this.string)-1);
+		    gettoken(); /* read the ']' */
 		}
 		gettoken(); /* read next past the ']' */
 		printf("of ");
@@ -117,9 +117,9 @@ deal_with_arrays()
 
 deal_with_function_args() 
 {
-	while (this.type != ')')
-	{
-		gettoken();
+    while (this.type != ')'
+    {
+        gettoken();
 	}
 	gettoken();
 	printf("function returning ");
@@ -127,35 +127,35 @@ deal_with_function_args()
 
 deal_with_pointers() 
 {
-	while (stack[top].type == '*')
-	{
-	    printf("%s ", pop.string );
+    while (stack[top].type == '*')
+    {
+        printf("%s ", pop.string );
 	}
 }
 
 deal_with_declarator() 
 {
 	/* deal with possible array/function following the identifier */
-	switch (this.type) 
-	{
-	    case '[' : deal_with_arrays(); break;
-	    case '(' : deal_with_function_args();
+    switch (this.type) 
+    {
+        case '[' : deal_with_arrays(); break;
+        case '(' : deal_with_function_args();
 	}
 
-	deal_with_pointers();
+    deal_with_pointers();
 
 	/* process tokens that we stacked while reading to identifier */
 	while (top >= 0) 
 	{
-		if (stack[top].type == '(' ) 
-		{
-			pop;
-			gettoken(); /* read past ')' */
-			deal_with_declarator();
+	    if (stack[top].type == '(' )
+	    {
+	        pop;
+	        gettoken(); /* read past ')' */
+            deal_with_declarator();
 		} 
 		else 
 		{
-			printf("%s ",pop.string);
+		    printf("%s ",pop.string);
 		}
 	}
 }
@@ -163,9 +163,9 @@ deal_with_declarator()
 main()
 {
 	/* put tokens on stack until we reach identifier */
-	read_to_first_identifier();
-	deal_with_declarator();
-	printf("\n");
+    read_to_first_identifier();
+    deal_with_declarator();
+    printf("\n");
 	return 0;
 }
 
@@ -179,8 +179,8 @@ main()
  *   2. postfix operators for functions "()" and arrays "[]"
  *   3. prefix operator for pointer-to "*"
  *
- * Also, if a const/volatile type-specifier is beside a type, 
- *       it applies to that type; otherwise the const/volatile specifier
- *       applies to the asterisk to its immediate left
+ * Also, if a const/volatile type-specifier is beside a type, it applies to that
+ * type; otherwise the const/volatile specifier applies to the asterisk to its
+ * immediate left.
  */
 
