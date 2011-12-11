@@ -88,14 +88,14 @@ gettoken(void)
 read_to_first_identifier() 
 {
     gettoken();
-	
-	while (this.type != IDENTIFIER)
-	{
-	    push(this);
-	    gettoken();
-	}
-	printf("%s is ", this.string);
-	gettoken();
+    
+    while (this.type != IDENTIFIER)
+    {
+        push(this);
+        gettoken();
+    }
+    printf("%s is ", this.string);
+    gettoken();
 }
 
 deal_with_arrays() 
@@ -104,15 +104,15 @@ deal_with_arrays()
     {
         printf("array ");
         gettoken(); /* an number or ']' */
-		
-		if (isdigit(this.string[0])) 
-		{
-		    printf("0..%d ", atoi(this.string)-1);
-		    gettoken(); /* read the ']' */
-		}
-		gettoken(); /* read next past the ']' */
-		printf("of ");
-	}
+        
+        if (isdigit(this.string[0])) 
+        {
+            printf("0..%d ", atoi(this.string)-1);
+            gettoken(); /* read the ']' */
+        }
+        gettoken(); /* read next past the ']' */
+        printf("of ");
+    }
 }
 
 deal_with_function_args() 
