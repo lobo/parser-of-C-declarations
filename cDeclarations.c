@@ -38,21 +38,21 @@ classify_string(void)
         strcpy(s, "read-only");
         return QUALIFIER;
     }
-   	if (!strcmp(s,"volatile")) return QUALIFIER;
-	if (!strcmp(s,"void")) return TYPE;
-	if (!strcmp(s,"char")) return TYPE;
-	if (!strcmp(s,"signed")) return TYPE;
-	if (!strcmp(s,"unsigned")) return TYPE;
-	if (!strcmp(s,"short")) return TYPE;
-	if (!strcmp(s,"int")) return TYPE;
-	if (!strcmp(s,"long")) return TYPE;
-	if (!strcmp(s,"float")) return TYPE;
-	if (!strcmp(s,"double")) return TYPE;
-	if (!strcmp(s,"struct")) return TYPE;
-	if (!strcmp(s,"union")) return TYPE;
-	if (!strcmp(s,"enum")) return TYPE;
-	
-	return IDENTIFIER;
+    if (!strcmp(s,"volatile")) return QUALIFIER;
+    if (!strcmp(s,"void")) return TYPE;
+    if (!strcmp(s,"char")) return TYPE;
+    if (!strcmp(s,"signed")) return TYPE;
+    if (!strcmp(s,"unsigned")) return TYPE;
+    if (!strcmp(s,"short")) return TYPE;
+    if (!strcmp(s,"int")) return TYPE;
+    if (!strcmp(s,"long")) return TYPE;
+    if (!strcmp(s,"float")) return TYPE;
+    if (!strcmp(s,"double")) return TYPE;
+    if (!strcmp(s,"struct")) return TYPE;
+    if (!strcmp(s,"union")) return TYPE;
+    if (!strcmp(s,"enum")) return TYPE;
+    
+    return IDENTIFIER;
 }
 
 /* Read next token into "this" */
@@ -87,12 +87,12 @@ gettoken(void)
 /* The piece of code that understandeth all parsing. */
 read_to_first_identifier() 
 {
-	gettoken();
+    gettoken();
 	
 	while (this.type != IDENTIFIER)
 	{
-		push(this);
-		gettoken();
+	    push(this);
+	    gettoken();
 	}
 	printf("%s is ", this.string);
 	gettoken();
@@ -120,9 +120,9 @@ deal_with_function_args()
     while (this.type != ')'
     {
         gettoken();
-	}
-	gettoken();
-	printf("function returning ");
+    }
+    gettoken();
+    printf("function returning ");
 }
 
 deal_with_pointers() 
@@ -130,43 +130,43 @@ deal_with_pointers()
     while (stack[top].type == '*')
     {
         printf("%s ", pop.string );
-	}
+    }
 }
 
 deal_with_declarator() 
 {
-	/* deal with possible array/function following the identifier */
+    /* deal with possible array/function following the identifier */
     switch (this.type) 
     {
         case '[' : deal_with_arrays(); break;
         case '(' : deal_with_function_args();
-	}
+    }
 
     deal_with_pointers();
 
-	/* process tokens that we stacked while reading to identifier */
-	while (top >= 0) 
-	{
-	    if (stack[top].type == '(' )
-	    {
-	        pop;
-	        gettoken(); /* read past ')' */
+    /* process tokens that we stacked while reading to identifier */
+    while (top >= 0) 
+    {
+        if (stack[top].type == '(' )
+        {
+            pop;
+            gettoken(); /* read past ')' */
             deal_with_declarator();
-		} 
-		else 
-		{
-		    printf("%s ",pop.string);
-		}
-	}
+        } 
+        else 
+        {
+            printf("%s ",pop.string);
+        }
+    }
 }
 
 main()
 {
-	/* put tokens on stack until we reach identifier */
+    /* put tokens on stack until we reach identifier */
     read_to_first_identifier();
     deal_with_declarator();
     printf("\n");
-	return 0;
+    return 0;
 }
 
 /* 
