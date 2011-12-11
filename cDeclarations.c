@@ -62,7 +62,7 @@ gettoken(void)
     char * p = this.string;
     
     /* Read past any spaces */
-    while((*p = getchar()) == ' '));
+    while((*p = getchar()) == ' ');
 
     if (isalnum(*p))
     {
